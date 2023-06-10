@@ -71,21 +71,27 @@ Route::post('/luan10/{id}', [PageController::class, 'postAdminEdit']);
 
 Route::post('/luan11/{id}', [PageController::class, 'postAdminDelete']);															
 
-Route::get('/register',function(){
+Route::get('/register', function () {
     return view('users.register');
-})	;	
-
-Route::post('/register',[UserController::class,'Register'])	;	
-				
-							
-Route::get('/login',function(){
-    return view('users.login');
 });
+Route::post('/register',[UserController::class,'Register']);
+
+Route::get('/login', function () {						
+    return view('users.login');						
+   });						
+Route::post('/login',[UserController::class,'Login']);
+Route::get('/logout',[UserController::class,'Logout']);
 
 
+													
+Route::get('add-to-cart/{id}', [PageController::class, 'getAddToCart'])->name('themgiohang');	
 
-
-
+Route::get('del-cart/{id}', [PageController::class, 'getDelItemCart'])->name('xoagiohang');												
+                                                
+  	Route::get('check-out', [PageController::class, 'getCheckout'])->name('dathang');				
+	Route::post('check-out', [PageController::class, 'postCheckout'])->name('dathang');				
+					
+                                              
 
 Route::get('/luan4',[PageController::class,'marter']);
 
