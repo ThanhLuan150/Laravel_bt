@@ -62,7 +62,7 @@ Route::get('/luan1/{id}',[PageController::class,'getLoaiSp']);
 Route::get('/luan2/{id}',[PageController::class,'getDetail']);
 
 
-Route::get('/luan3/',[PageController::class,'getIndexAdmin']);
+Route::get('/luan3',[PageController::class,'getIndexAdmin']);
 
 Route::get('/luan9', [PageController::class, 'getAdminAdd'])->name('add-product');														
 Route::post('/luan9', [PageController::class, 'postAdminAdd'])->name('admin-add-form');										
@@ -88,7 +88,7 @@ Route::get('add-to-cart/{id}', [PageController::class, 'getAddToCart'])->name('t
 
 Route::get('del-cart/{id}', [PageController::class, 'getDelItemCart'])->name('xoagiohang');												
                                                 
-  	Route::get('check-out', [PageController::class, 'getCheckout'])->name('dathang');				
+Route::get('check-out', [PageController::class, 'getCheckout'])->name('dathang');				
 	Route::post('check-out', [PageController::class, 'postCheckout'])->name('dathang');				
 					
                                               

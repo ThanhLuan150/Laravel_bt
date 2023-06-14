@@ -76,7 +76,7 @@
 							<li><a href="/luan3">Loai Sản phẩm</a>					
 								<ul class="sub-menu">				
 									@foreach($loai_sp as $loai)			
-									<li><a href="/luan3{{$loai->id}}">{{$loai->name}}</a></li>			
+									<li><a href="luan1/{{$loai->id}}">{{$loai->name}}</a></li>			
 									@endforeach			
 								</ul>				
 							</li>					
