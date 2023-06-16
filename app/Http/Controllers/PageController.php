@@ -6,6 +6,7 @@ use App\Models\bills;
 use App\Models\Cart;
 use App\Models\comments;
 use App\Models\customer;
+use App\Models\customers;
 use App\Models\products;
 use App\Models\slides;
 use App\Models\slidess;
@@ -154,20 +155,24 @@ public function getAddToCart(Request $req, $id)
         return '<script>alert("Vui lòng đăng nhập để sử dụng chức năng này.");window.location.assign("/login");</script>';
     }
 }
-public function getDelItemCart($id){
-    $oldCart = Session::has('cart')?Session::get('cart'):null;
+
+
+public function getDelItemCart($id)
+{
+    $oldCart = Session::has('cart') ? Session::get('cart') : null;
     $cart = new Cart($oldCart);
     $cart->removeItem($id);
-    if(count($cart->items)>0){
-    Session::put('cart',$cart);
 
-    }
-    else{
+    if (count($cart->items) > 0) {
+        Session::put('cart', $cart);
+    } else {
         Session::forget('cart');
     }
+
     return redirect()->back();
-}												
-														
+}											
+	
+
 
 
 public function getCheckout()															
@@ -180,14 +185,21 @@ return view('page.checkout')->with(['cart' => Session::get('cart'),
 'totalPrice' => $cart->totalPrice, 															
 'totalQty' => $cart->totalQty]);;															
 } else {															
-return redirect('trangchu');															
+return redirect('/check-out');															
 }															
 }															
 															
 public function postCheckout(Request $req)															
-{															
+{	
+
+$cart = Session::get('cart');
+
+if (!$cart || !count($cart->items)) {
+        return redirect()->back()->with('error', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.');
+    }
+
 $cart = Session::get('cart');															
-$customer = new customer();															
+$customer = new customers();															
 $customer->name = $req->full_name;															
 $customer->gender = $req->gender;															
 $customer->email = $req->email;															
@@ -205,7 +217,7 @@ $customer->save();
 $bill = new bills();															
 $bill->id_customer = $customer->id;															
 $bill->date_order = date('Y-m-d');															
-$bill->total = $cart->totalPrice;															
+														
 $bill->payment = $req->payment_method;															
 if (isset($req->notes)) {															
 $bill->note = $req->notes;															
@@ -224,13 +236,17 @@ $bill_detail->save();
 }															
 															
 Session::forget('cart');															
-$wishlists =wishlists::where('id_user', Session::get('user')->id)->get();															
-if (isset($wishlists)) {															
-foreach ($wishlists as $element) {															
-$element->delete();															
+$wishlists = wishlists::where('id_user', optional(Session::get('user'))->id)->get();
+
+if ($wishlists) {
+    foreach ($wishlists as $element) {
+        $element->delete();
+    }
+}
+														
 }															
 }															
 
  
     
-}}
+
