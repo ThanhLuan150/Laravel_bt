@@ -22,7 +22,7 @@
         <div class="col-sm-3">
           <ul class="aside-menu">
             @foreach($type_product as $l)
-            <li><a href="/type/{{$l->id}}">{{$l->name}}</a></li>
+            <li><a href="/luan1/{{$l->id}}">{{$l->name}}</a></li>
             @endforeach
           </ul>
         </div>

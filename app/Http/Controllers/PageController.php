@@ -5,11 +5,8 @@ use App\Models\BillDetail;
 use App\Models\bills;
 use App\Models\Cart;
 use App\Models\comments;
-use App\Models\customer;
 use App\Models\customers;
 use App\Models\products;
-use App\Models\slides;
-use App\Models\slidess;
 use App\Models\slidesses;
 use App\Models\type_products;
 use App\Models\wishlists;
@@ -45,7 +42,7 @@ class PageController extends Controller
     public function getIndex(){							
         $slide =slidesses::all();						
     	//return view('page.trangchu',['slide'=>$slide]);						
-        $new_product = products::where('new',1)->paginate(4);
+        $new_product = products::where('new',1)->paginate(8);
         $sanpham_khuyenmai = products::where('promotion_price','<>',0)->paginate(4);						
         //dd($new_product);							
     	return view('page.trangchu',compact('slide','new_product','sanpham_khuyenmai'));						
@@ -243,7 +240,9 @@ if ($wishlists) {
         $element->delete();
     }
 }
-														
+
+
+return redirect('/luan/')->with('success', 'Thanh toán thành công');														
 }															
 }															
 
